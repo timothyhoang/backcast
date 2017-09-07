@@ -12,25 +12,14 @@ var AppView = Backbone.View.extend({
     this.videos.on('select', (video) => { 
       new VideoPlayerView({model: video}); 
     });
-
-    this.$('button').on('click', () => {
-      this.videos.search(this.$('input').val());
-      this.$('input').val('');
-    });
-
-    this.$('input').on('keyup', (event) => {
-      if(event.keyCode === 13){
-        this.videos.search(this.$('input').val());
-        this.$('input').val('');
-      }
-    });
   },
 
   render: function() {
     this.$el.html(this.template());
 
     new SearchView({
-      el: this.$('.search')
+      el: this.$('.search'),
+      collection: this.videos
     }).render();
 
     new VideoPlayerView({model: this.videos.first()});
